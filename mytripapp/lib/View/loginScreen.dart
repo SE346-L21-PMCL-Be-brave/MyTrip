@@ -1,5 +1,8 @@
+
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:mytripapp/View/homeScreen.dart';
 import 'package:mytripapp/View/registerScreen.dart';
 
 class LoginScreen extends StatefulWidget{
@@ -87,7 +90,14 @@ class loginScreenState extends State<LoginScreen>{
                            child: RaisedButton(
                               color: Color(0xff33691e),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                              onPressed: onLoginClicked,
+                              onPressed: (){
+                               Navigator.of(context).push(
+
+                                  MaterialPageRoute(builder: (context) => homeScreen()));
+
+
+                                
+                              },
                               child: Text("Log In",
                                   style: TextStyle(
                                   color: Colors.white,
@@ -110,7 +120,7 @@ class loginScreenState extends State<LoginScreen>{
                                     context,
                                     MaterialPageRoute(builder: (context) => RegisterScreen()));
                                 },
-                                text: " Reginster here",
+                                text: " Register here",
                                 style: TextStyle(color: Colors.lightGreen[800], fontSize: 12),
                               )
                             ]
@@ -124,7 +134,7 @@ class loginScreenState extends State<LoginScreen>{
           );
   }
 }
-void onLoginClicked() {}
+
 // class loginScreenState extends State<loginScreen>{
 //   @override
 //   Widget build(BuildContext context) {

@@ -149,5 +149,8 @@ class registerScreenState extends State<RegisterScreen> {
         ),
     );
   }
+
+  void onLoginClicked() {
+  }
 }
 
