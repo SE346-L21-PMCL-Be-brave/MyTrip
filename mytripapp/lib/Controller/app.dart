@@ -1,3 +1,4 @@
+import 'package:mytripapp/View/Trip5.dart';
 import 'package:mytripapp/View/loginScreen.dart';
 import 'package:mytripapp/View/registerScreen.dart';
 import 'package:flutter/material.dart';
@@ -13,4 +14,6 @@ class MyApp extends StatelessWidget{
     );
   }
 }
+
+
 
