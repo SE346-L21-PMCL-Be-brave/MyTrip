@@ -1,50 +1,212 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mytripapp/View/Trip5.dart';
-class homeScreen extends StatefulWidget {
+
+
+
+
+class homeScreen extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return HomeScreenState();
+    return homeScreenState();
   }
 }
+class homeScreenState extends State<homeScreen> {
 
-class HomeScreenState extends State<homeScreen>{
-  int _selectedPage =0;
-  final _pageOption =[
-    Trip5Screen(),
-    Text('Item 2'),
-    Text('Item 3'),
-    Text('Item 4')
+  List imgList = [
+    "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg"
+        "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg"
+        "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg"
+
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pageOption[_selectedPage] ,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedPage,
-        onTap: (int index){
-          setState(() {
-            _selectedPage = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home,color: Colors.lightGreen[900]),
-              title: Text('Home',style: TextStyle(color: Colors.lightGreen[900]))
+        appBar: AppBar(
+          leadingWidth: 0,
+          title: Text("My Travel",style: TextStyle(color: Colors.lightGreen[900],fontWeight: FontWeight.bold),),
+          backgroundColor: Colors.white,
+          actions: [
+            IconButton(
+                icon: ClipOval(child: Image.asset("assets/img/download.jpg")),
+                onPressed: (){} )
+          ],
+
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget> [
+              CarouselSlider(
+
+                  items: imgList.map((imgURL) {
+                    return Builder(
+                        builder: (BuildContext context){
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+
+                            ),
+                            child: Image.network(
+                              imgURL,
+                              fit: BoxFit.fill,
+
+                            ),
+                          );
+                        });
+                  }).toList(),
+
+                  height: MediaQuery.of(context).size.height*0.28,
+                  initialPage: 0,
+                  enlargeCenterPage: true,
+                  autoPlay: true,
+                  enableInfiniteScroll: true,
+                  autoPlayInterval: Duration(seconds: 2),
+                  autoPlayAnimationDuration: Duration(milliseconds: 2000),
+                  pauseAutoPlayOnTouch:  Duration(seconds: 10),
+
+              ),
+
+
+
+
+              SizedBox(height: MediaQuery.of(context).size.height*0.012,),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(children: [
+                  Expanded(
+                    child: Text(
+                      "Hot Trending",
+                      style: TextStyle(
+                        color: Colors.lightGreen[800],
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+
+                      ),
+                    ),
+                  ),
+                  Text(
+                    "View All",
+                    style: TextStyle(
+                      color: Colors.lightGreen[800],
+                      fontSize: 15,
+                    ),
+                  ),
+                ]),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height*0.2,
+                width: 600,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              // Navigator.push(
+                              // context,
+                              //  MaterialPageRoute(
+                              //  builder: (_) =>
+                              //    Details(destinationList[index])),
+                              //  );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 115,
+                                width: 150,
+                                child: Image.network("https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg",
+                                    fit: BoxFit.fill),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "testname",
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.brown[900]),
+                          ),
+                        ],
+                      );
+                    }),
+
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height*0.012),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(children: [
+                  Expanded(
+                    child: Text(
+                      "Most Recents",
+                      style: TextStyle(
+                        color: Colors.lightGreen[800],
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ]),),
+              SizedBox(height: MediaQuery.of(context).size.height*0.012),
+              Container(
+                height: MediaQuery.of(context).size.height*0.245,
+                width: MediaQuery.of(context).size.width,
+                child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+
+                      maxCrossAxisExtent: 200,
+
+
+
+
+                    ),
+                    scrollDirection: Axis.vertical,
+                    itemCount: 10,
+                    itemBuilder: (context,index) {
+                      return Column(children: [
+                        InkWell(
+                          onTap: () {
+                            // Navigator.push(
+                            // context,
+                            //  MaterialPageRoute(
+                            //  builder: (_) =>
+                            //    Details(destinationList[index])),
+                            //  );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Container(
+                              height: 120,
+                              width: 200,
+                              child: Image.network(
+                                  "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg",
+                                  fit: BoxFit.fill),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "testname",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.brown[900]),
+                        ),
+                      ]);
+                    }
+                ),
+              )
+            ],
           ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.flight_takeoff,color: Colors.lightGreen[900]),
-              title: Text('Trip',style: TextStyle(color: Colors.lightGreen[900]))
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications,color: Colors.lightGreen[900]),
-              title: Text('Notifications',style: TextStyle(color: Colors.lightGreen[900]))
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle,color: Colors.lightGreen[900]),
-              title: Text('Profile',style: TextStyle(color: Colors.lightGreen[900]))
-          )
-        ],
-      ),
+        )
+
+
+
+
     );
   }
+
 }
