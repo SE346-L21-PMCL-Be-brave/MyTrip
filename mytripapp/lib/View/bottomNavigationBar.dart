@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'homeScreen.dart';
+import 'tripScreen.dart';
 class navigationBar extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -11,7 +12,7 @@ class NavigationBarState extends State<navigationBar>{
   int _selectedPage =0;
   final _pageOption =[
     homeScreen(),
-    Text('Item 2'),
+    TripScreen(),
     Text('Item 3'),
     Text('Item 4')
   ];

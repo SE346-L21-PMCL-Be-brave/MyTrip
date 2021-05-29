@@ -44,10 +44,7 @@ class homeScreenState extends State<homeScreen> {
                         builder: (BuildContext context){
                           return Container(
                             width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
 
-                            ),
                             child: Image.network(
                               imgURL,
                               fit: BoxFit.fill,
