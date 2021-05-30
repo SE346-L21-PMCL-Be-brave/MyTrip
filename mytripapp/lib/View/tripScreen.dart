@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:mytripapp/Model/Utils/appUtils.dart';
 import 'package:mytripapp/Model/places.dart';
 import 'package:mytripapp/View/Trip5.dart';
+import 'package:mytripapp/View/details.dart';
+import 'createTrip.dart';
 import 'package:mytripapp/Model/Utils/appUtils.dart';
 class TripScreen extends StatefulWidget{
   @override
@@ -128,18 +130,18 @@ class TripScreenState extends State<TripScreen> {
 
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 4,
+              itemCount: Trip.trip[indexx].length,
               itemBuilder: (context, index) {
                 return Column(
                   children: [
                     InkWell(
                       onTap: () {
-                        // Navigator.push(
-                        // context,
-                        //  MaterialPageRoute(
-                        //  builder: (_) =>
-                        //    Details(destinationList[index])),
-                        //  );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) =>
+                                  detailsScreen(Trip.trip[indexx][index]) ),
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -173,7 +175,10 @@ class TripScreenState extends State<TripScreen> {
                     key: _floatingKey,
                     icon: Icon(Icons.add_circle_outlined, color: Colors.white,size: 30,),
                     backgroundColor: Colors.lightGreen[900],
-                    onPressed: null,
+                    onPressed: (){
+
+                      _navigateAndDisplaySelection(context);
+                    },
 
                     label: Container(
                   child: Column(
@@ -191,4 +196,20 @@ class TripScreenState extends State<TripScreen> {
       )),
     );
   }
+  _navigateAndDisplaySelection(BuildContext context) async {
+    final result =  await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (_) =>
+              createTripScreen() ),
+    );
+    if(result != null){
+      setState(() {
+
+        List<Place> newplacelist =result;
+        Trip.trip.add(newplacelist);
+      });
+    }
+  }
+
 }

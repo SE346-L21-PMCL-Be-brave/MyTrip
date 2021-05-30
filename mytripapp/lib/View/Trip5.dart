@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:mytripapp/View/details.dart';
 import 'package:mytripapp/View/placeWidget.dart';
 import 'package:mytripapp/View/registerScreen.dart';
 import 'package:mytripapp/Model/Utils/appUtils.dart';
@@ -43,12 +44,12 @@ class trip5ScreenState extends State<Trip5Screen> {
              children: [
                InkWell(
                  onTap: () {
-                   // Navigator.push(
-                   // context,
-                   //  MaterialPageRoute(
-                   //  builder: (_) =>
-                   //    Details(destinationList[index])),
-                   //  );
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                         builder: (_) =>
+                             detailsScreen(appUtils.list[index]) ),
+                   );
                  },
                  child: Padding(
                    padding: const EdgeInsets.all(8.0),
