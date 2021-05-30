@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:mytripapp/View/details.dart';
 import 'package:mytripapp/View/placeWidget.dart';
-import 'package:mytripapp/View/registerScreen.dart';
+import 'package:mytripapp/View/Login/registerScreen.dart';
 import 'package:mytripapp/Model/Utils/appUtils.dart';
 
 class Trip5Screen extends StatefulWidget{
