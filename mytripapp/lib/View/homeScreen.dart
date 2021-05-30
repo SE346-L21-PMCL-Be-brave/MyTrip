@@ -84,13 +84,7 @@ class homeScreenState extends State<homeScreen> {
                       ),
                     ),
                   ),
-                  Text(
-                    "View All",
-                    style: TextStyle(
-                      color: Colors.lightGreen[800],
-                      fontSize: 15,
-                    ),
-                  ),
+                  
                 ]),
               ),
               Container(

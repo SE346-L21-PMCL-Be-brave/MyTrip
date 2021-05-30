@@ -14,7 +14,7 @@ class NavigationBarState extends State<navigationBar>{
     homeScreen(),
     TripScreen(),
     Text('Item 3'),
-    Text('Item 4')
+
   ];
   @override
   Widget build(BuildContext context) {
@@ -28,6 +28,7 @@ class NavigationBarState extends State<navigationBar>{
           });
         },
         items: [
+
           BottomNavigationBarItem(
               icon: Icon(Icons.home,color: Colors.lightGreen[900]),
               title: Text('Home',style: TextStyle(color: Colors.lightGreen[900]))
@@ -36,10 +37,7 @@ class NavigationBarState extends State<navigationBar>{
               icon: Icon(Icons.flight_takeoff,color: Colors.lightGreen[900]),
               title: Text('Trip',style: TextStyle(color: Colors.lightGreen[900]))
           ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications,color: Colors.lightGreen[900]),
-              title: Text('Notifications',style: TextStyle(color: Colors.lightGreen[900]))
-          ),
+
           BottomNavigationBarItem(
               icon: Icon(Icons.account_circle,color: Colors.lightGreen[900]),
               title: Text('Profile',style: TextStyle(color: Colors.lightGreen[900]))
