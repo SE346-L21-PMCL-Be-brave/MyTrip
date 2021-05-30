@@ -1,6 +1,6 @@
 import 'package:mytripapp/View/Trip5.dart';
-import 'package:mytripapp/View/loginScreen.dart';
-import 'package:mytripapp/View/registerScreen.dart';
+import 'package:mytripapp/View/Login/loginScreen.dart';
+import 'package:mytripapp/View/Login/registerScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 

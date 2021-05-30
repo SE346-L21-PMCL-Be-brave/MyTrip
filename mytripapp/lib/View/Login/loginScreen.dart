@@ -2,9 +2,8 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:mytripapp/View/homeScreen.dart';
-import 'package:mytripapp/View/registerScreen.dart';
-import 'bottomNavigationBar.dart';
+import 'package:mytripapp/View/Login/registerScreen.dart';
+import '../bottomNavigationBar.dart';
 
 class LoginScreen extends StatefulWidget{
   @override
@@ -95,9 +94,6 @@ class loginScreenState extends State<LoginScreen>{
                                Navigator.of(context).push(
 
                                   MaterialPageRoute(builder: (context) => navigationBar()));
-
-
-                                
                               },
                               child: Text("Log In",
                                   style: TextStyle(

@@ -104,7 +104,7 @@ class createTripScreenState extends State<createTripScreen>{
                 style: TextButton.styleFrom(
 
                   side: BorderSide(color: Colors.black,width: 0.7),
-                  fixedSize: Size(150, 40),
+                  //fixedSize: Size(150, 40),
 
                 ),
               ),
@@ -117,7 +117,7 @@ class createTripScreenState extends State<createTripScreen>{
                    style: TextButton.styleFrom(
                      backgroundColor: Colors.lightGreen[900],
                      side: BorderSide(color: Colors.lightGreen[900],width: 0.7),
-                     fixedSize: Size(150, 40),
+                     //fixedSize: Size(150, 40),
 
                    ),
                  ),

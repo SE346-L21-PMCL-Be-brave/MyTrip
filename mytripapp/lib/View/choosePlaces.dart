@@ -94,7 +94,7 @@ class chooseScreenState extends State<chooseScreen>{
             style: TextButton.styleFrom(
               backgroundColor: Colors.lightGreen[900],
               side: BorderSide(color: Colors.lightGreen[900],width: 0.7),
-              fixedSize: Size(200, 40),
+              //fixedSize: Size(200, 40),
 
             ),
           ))

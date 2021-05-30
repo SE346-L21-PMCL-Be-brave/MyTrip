@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:mytripapp/View/loginScreen.dart';
+import 'package:mytripapp/View/Login/loginScreen.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
