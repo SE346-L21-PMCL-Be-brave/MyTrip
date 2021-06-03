@@ -24,7 +24,7 @@ class TripScreenState extends State<TripScreen> {
 
   final GlobalKey _floatingKey= new GlobalKey();
   Size floatingSize;
-  Offset floatingLocation= new Offset(10, 450);
+  Offset floatingLocation= new Offset(10, 200);
   void getFloatingSize(){
     RenderBox floatingBox= _floatingKey.currentContext.findRenderObject();
     floatingSize= floatingBox.size;

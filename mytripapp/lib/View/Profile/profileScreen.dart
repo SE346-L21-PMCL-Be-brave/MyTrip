@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mytripapp/View/Login/loginScreen.dart';
 import 'package:mytripapp/View/Profile/updatePass.dart';
@@ -24,6 +25,7 @@ class profileScreenState extends State<ProfileScreen> {
         child: SingleChildScrollView(
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 SizedBox(
                   height: 30,

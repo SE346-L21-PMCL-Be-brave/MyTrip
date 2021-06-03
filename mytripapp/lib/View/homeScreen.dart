@@ -84,7 +84,7 @@ class homeScreenState extends State<homeScreen> {
                       ),
                     ),
                   ),
-                  
+
                 ]),
               ),
               Container(
@@ -108,7 +108,7 @@ class homeScreenState extends State<homeScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                height: 115,
+                                height: MediaQuery.of(context).size.height*0.15,
                                 width: 150,
                                 child: Image.network("https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg",
                                     fit: BoxFit.fill),
