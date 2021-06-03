@@ -6,10 +6,3 @@ import 'package:mytripapp/View/Trip5.dart';
 void main() {
   runApp(MyApp());
 }
-
-
-
-
-
-
-
