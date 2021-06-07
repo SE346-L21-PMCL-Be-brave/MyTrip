@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mytripapp/Controller/auth_service.dart';
 import 'package:mytripapp/View/Login/loginScreen.dart';
 import 'package:mytripapp/View/Profile/updatePass.dart';
 import 'package:mytripapp/View/Profile/updateProfileScreen.dart';
+import 'package:provider/provider.dart';
 
 
 class ProfileScreen extends StatefulWidget{
@@ -127,15 +129,14 @@ class profileScreenState extends State<ProfileScreen> {
                   Center(
                     child: SizedBox(
                       width: 170,
-                      height: 100,
+                      height: 60,
                       child: RaisedButton(
                           color: Color(0xff33691e),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(80))),
                           onPressed: (){
-                            Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) => LoginScreen()));
+                            context.read<AuthenticationService>().signOut();
                           },
-                          child: Text("Log In",
+                          child: Text("Log out",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 25),)
