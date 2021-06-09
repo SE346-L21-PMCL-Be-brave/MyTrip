@@ -1,11 +1,17 @@
 
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mytripapp/Controller/auth_service.dart';
 import 'package:mytripapp/View/Login/registerScreen.dart';
+import 'package:provider/provider.dart';
 import '../bottomNavigationBar.dart';
+import 'package:mytripapp/Controller/app.dart';
 
 class LoginScreen extends StatefulWidget{
+
   @override
   State<StatefulWidget> createState() {
   return loginScreenState();
@@ -13,8 +19,34 @@ class LoginScreen extends StatefulWidget{
 }
 
 class loginScreenState extends State<LoginScreen>{
-
+ final TextEditingController emailController = TextEditingController();
+ final TextEditingController passController = TextEditingController();
   bool _eyeText = true;
+  final auth= FirebaseAuth.instance;
+  Future<String> createDialog(BuildContext context){
+    TextEditingController resetController= TextEditingController();
+    return showDialog(context: context, builder:(context){
+      return AlertDialog(
+        title: Text("Your reset password Email?"),
+        content: TextField(
+          style: TextStyle(color: Colors.black),
+          controller: resetController,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+            hintText: "Email",
+          ),
+        ),
+        actions: <Widget>[
+          MaterialButton(
+              elevation: 5.0,
+              child: Text("Send Request"),
+              onPressed: (){
+                Navigator.of(context).pop(resetController.text.toString().trim());
+              })
+        ],
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +70,10 @@ class loginScreenState extends State<LoginScreen>{
                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                        child: TextField(
                         style: TextStyle(color: Colors.black),
+                        controller: emailController,
                         decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                        hintText: "Username",
+                        hintText: "Email",
                        //labelStyle: TextStyle(color: Color(0xff888888),fontSize: 60)
                         ),),
                      ),
@@ -51,6 +84,7 @@ class loginScreenState extends State<LoginScreen>{
                       child: TextField(
                          style: TextStyle(color: Colors.black),
                          obscureText: _eyeText,
+                         controller: passController,
                          decoration: InputDecoration(
                          border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                          hintText: "Password",
@@ -72,7 +106,11 @@ class loginScreenState extends State<LoginScreen>{
                         child: Container(
                            alignment: AlignmentDirectional.topEnd,
                            child: TextButton(
-                              onPressed: (){},
+                              onPressed: (){
+                                  createDialog(context).then((onValue){
+                              auth.sendPasswordResetEmail(email: onValue);
+                                  });
+                              },
                                child: Text("Forgot Password?",
                                style: TextStyle(
                                  fontSize: 13,
@@ -91,9 +129,15 @@ class loginScreenState extends State<LoginScreen>{
                               color: Color(0xff33691e),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                               onPressed: (){
-                               Navigator.of(context).push(
+                                context.read<AuthenticationService>().signIn(
+                                  email: emailController.text.trim(),
+                                  pass: passController.text.trim()
 
-                                  MaterialPageRoute(builder: (context) => navigationBar()));
+                                );
+
+                                 
+
+
                               },
                               child: Text("Log In",
                                   style: TextStyle(

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "778634060012",
+    "firebase_url": "https://demo1-def24-default-rtdb.firebaseio.com",
+    "project_id": "demo1-def24",
+    "storage_bucket": "demo1-def24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778634060012:android:f9af5d477c33f7abc105c9",
+        "android_client_info": {
+          "package_name": "com.example.mytripapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778634060012-0b1s6v8rcb088f5tmkss2ri54f8stdqf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChyGPmrq4DBa8whkadEXJE_t4WR-G2JtU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778634060012-0b1s6v8rcb088f5tmkss2ri54f8stdqf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "778634060012-9nu7emdehn27bnt4mtfios2ue8dvv6ba.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mytripapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
