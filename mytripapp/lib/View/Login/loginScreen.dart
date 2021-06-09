@@ -1,5 +1,6 @@
 
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -21,6 +22,31 @@ class loginScreenState extends State<LoginScreen>{
  final TextEditingController emailController = TextEditingController();
  final TextEditingController passController = TextEditingController();
   bool _eyeText = true;
+  final auth= FirebaseAuth.instance;
+  Future<String> createDialog(BuildContext context){
+    TextEditingController resetController= TextEditingController();
+    return showDialog(context: context, builder:(context){
+      return AlertDialog(
+        title: Text("Your reset password Email?"),
+        content: TextField(
+          style: TextStyle(color: Colors.black),
+          controller: resetController,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+            hintText: "Email",
+          ),
+        ),
+        actions: <Widget>[
+          MaterialButton(
+              elevation: 5.0,
+              child: Text("Send Request"),
+              onPressed: (){
+                Navigator.of(context).pop(resetController.text.toString().trim());
+              })
+        ],
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +106,11 @@ class loginScreenState extends State<LoginScreen>{
                         child: Container(
                            alignment: AlignmentDirectional.topEnd,
                            child: TextButton(
-                              onPressed: (){},
+                              onPressed: (){
+                                  createDialog(context).then((onValue){
+                              auth.sendPasswordResetEmail(email: onValue);
+                                  });
+                              },
                                child: Text("Forgot Password?",
                                style: TextStyle(
                                  fontSize: 13,
@@ -104,12 +134,10 @@ class loginScreenState extends State<LoginScreen>{
                                   pass: passController.text.trim()
 
                                 );
-                                if(AuthenticationService.codeLogin==1){
-                                  Navigator.of(context).push(
 
-                                      MaterialPageRoute(builder: (context) => navigationBar()));
+                                 
 
-                               }
+
                               },
                               child: Text("Log In",
                                   style: TextStyle(

@@ -1,23 +1,31 @@
+
+
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mytripapp/View/bottomNavigationBar.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
-  static int codeLogin=0;
+
   AuthenticationService(this._firebaseAuth);
   Stream<User> get authStateChanges => _firebaseAuth.authStateChanges();
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
-    codeLogin=0;
   }
+
   Future<String> signIn({String email,String pass}) async {
     try {
        await _firebaseAuth.signInWithEmailAndPassword(
           email: email,
           password: pass
       );
-       codeLogin=1;
+
+
        Fluttertoast.showToast(
            msg: "Login success",
            toastLength: Toast.LENGTH_SHORT,
@@ -27,6 +35,7 @@ class AuthenticationService {
            textColor: Colors.white,
            fontSize: 16.0
        );
+
 
        return "Signed In";
     } on FirebaseAuthException catch (e) {
@@ -60,6 +69,16 @@ class AuthenticationService {
           fontSize: 16.0
       );
       return e.message;
+    }
+  }
+}
+class FirebaseApi {
+  static UploadTask uploadImage(String destination, File image){
+    try {
+      final ref = FirebaseStorage.instance.ref(destination);
+      return ref.putFile(image);
+    } on FirebaseException catch(e){
+      return null;
     }
   }
 }
