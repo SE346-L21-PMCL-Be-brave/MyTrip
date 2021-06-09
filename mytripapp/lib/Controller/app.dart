@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mytripapp/Controller/auth_service.dart';
 import 'package:mytripapp/View/Trip5.dart';
@@ -31,14 +32,14 @@ class AuthenticationWrapper extends StatelessWidget{
 }): super(key: key);
   @override
   Widget build(BuildContext context) {
-final firebaseUser = context.watch<User>();
-if(firebaseUser!= null){
-  return navigationBar() ;
-
-}
-return LoginScreen();
+    final firebaseUser = context.watch<User>();
+    if (firebaseUser != null) {
+      return navigationBar();
+    }
+    else {
+      return LoginScreen();
+    }
   }
-
 }
 
 
