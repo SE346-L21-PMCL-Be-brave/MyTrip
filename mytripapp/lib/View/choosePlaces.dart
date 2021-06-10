@@ -4,13 +4,13 @@ import 'package:mytripapp/Model/Utils/appUtils.dart';
 import 'package:mytripapp/Model/places.dart';
 import 'package:mytripapp/Model/CheckBoxPlaceModel.dart';
 import 'package:mytripapp/View/createTrip.dart';
-class chooseScreen extends StatefulWidget{
+class chooseScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return chooseScreenState();
   }
-
 }
+
 class chooseScreenState extends State<chooseScreen>{
   List<Place> availablePlace=[
     Place(name: "Ho Chi Minh",locate: "noway",img:  "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg"),
