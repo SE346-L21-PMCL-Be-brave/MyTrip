@@ -96,6 +96,7 @@ class detailsScreenState extends State<detailsScreen>{
                     ],
                   ),
                     onTap: (){
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
