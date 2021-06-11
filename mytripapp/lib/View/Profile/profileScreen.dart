@@ -45,13 +45,7 @@ Future<void> getUserImage(BuildContext context){
     });
 
   });
-
-
-
-
 }
-
-
 
   @override
   Widget build(BuildContext context) {
