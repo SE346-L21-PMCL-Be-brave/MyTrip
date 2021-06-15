@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../bottomNavigationBar.dart';
 
@@ -15,7 +17,9 @@ class updatePassScreenState extends State<updatePassScreen> {
   bool _eyeText1 = true;
   bool _eyeText2 = true;
   bool _eyeText3= true;
-
+final TextEditingController passController = TextEditingController();
+final TextEditingController newPassController= TextEditingController();
+final TextEditingController confirmPassController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +38,7 @@ class updatePassScreenState extends State<updatePassScreen> {
                 style: TextStyle(
                   fontSize: 20,
                 ),
+                controller: passController,
                 obscureText: _eyeText1,
                 decoration: InputDecoration(
                     suffixIcon: IconButton(
@@ -62,6 +67,7 @@ class updatePassScreenState extends State<updatePassScreen> {
                 style: TextStyle(
                   fontSize: 20,
                 ),
+                controller: newPassController,
                 obscureText: _eyeText2,
                 decoration: InputDecoration(
                     suffixIcon: IconButton(
@@ -95,6 +101,7 @@ class updatePassScreenState extends State<updatePassScreen> {
                 style: TextStyle(
                   fontSize: 20,
                 ),
+                controller: confirmPassController,
                 obscureText: _eyeText3,
                 decoration: InputDecoration(
                     suffixIcon: IconButton(
@@ -130,9 +137,7 @@ class updatePassScreenState extends State<updatePassScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40)),
                     onPressed: () {
-                      SelectedPage(2);
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => navigationBar()));
+                     Navigator.pop(context);
                     },
                     child: Text("CANCEL",
                         style: TextStyle(
@@ -141,7 +146,12 @@ class updatePassScreenState extends State<updatePassScreen> {
                             color: Colors.black)),
                   ),
                   RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      String pass = passController.text.toString();
+                      String newPass= newPassController.text.toString();
+                      String confirmPass= confirmPassController.text.toString();
+                      validateInfo(pass,newPass,confirmPass,context);
+                      },
                     color: Colors.green,
                     padding: EdgeInsets.symmetric(horizontal: 40,vertical: 20),
                     elevation: 2,
@@ -161,6 +171,105 @@ class updatePassScreenState extends State<updatePassScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+void validateInfo(String pass,String newPass, String confirmPass ,BuildContext context) {
+  if(pass!=""&&newPass!=""&&confirmPass!=""){
+  if(pass.length>6&& newPass.length>6){
+    if(newPass==confirmPass){
+        changePass(pass,newPass,context);
+    }
+    else{
+      Fluttertoast.showToast(
+          msg: "Please validate your new password",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+  }
+  else{
+    Fluttertoast.showToast(
+        msg: "Invalid Password",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }}
+  else{
+    Fluttertoast.showToast(
+        msg: "Please fill out all field",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
+}
+
+Future<void> changePass(String pass, String newPass,BuildContext context) async {
+  bool result;
+  final auth= FirebaseAuth.instance;
+  final User = auth.currentUser;
+  var authCredentials = EmailAuthProvider.credential(email: User.email, password: pass);
+  await User.reauthenticateWithCredential(authCredentials).then((value) {
+    if(value!=null) result =true;
+
+
+  }).catchError((error){
+    Fluttertoast.showToast(
+        msg: "Current Password Incorrect",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  });
+  if(result==true){
+    User.updatePassword(newPass).then((_) {
+      Fluttertoast.showToast(
+          msg: "Change Password Success",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+      Navigator.pop(context);
+    }).catchError((error){
+      Fluttertoast.showToast(
+          msg: "Change Password Failed",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    });
+  }
+  else{
+    Fluttertoast.showToast(
+        msg: "Current Password Incorrect",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey,
+        textColor: Colors.white,
+        fontSize: 16.0
     );
   }
 }

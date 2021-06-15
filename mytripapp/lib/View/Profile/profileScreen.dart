@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -19,22 +20,36 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class ProfileScreen extends StatefulWidget{
+  ProfileScreen({this.app});
+  FirebaseApp app;
   @override
   State<StatefulWidget> createState() {
     return profileScreenState();
   }
 }
-String imgUrl = "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg";
+
 class profileScreenState extends State<ProfileScreen> {
  final auth = FirebaseAuth.instance;
  final storage = FirebaseStorage.instance;
  File _image;
  String ImageUrl;
+final refDatabase = FirebaseDatabase.instance.reference();
 
+ String imgUrl = "1";
 
+Future<void> getUserImage(BuildContext context){
+
+  refDatabase.child("User").child(auth.currentUser.uid.toString()).child("imageProfile").once().then((DataSnapshot snapshot){
+    setState(() {
+      imgUrl=snapshot.value;
+    });
+
+  });
+}
 
   @override
   Widget build(BuildContext context) {
+  getUserImage(context);
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.fromLTRB(20,10,20,0),
@@ -51,6 +66,7 @@ class profileScreenState extends State<ProfileScreen> {
                 ),
                 Column(
                   children: <Widget>[
+
                     imageProfile(context),
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
@@ -167,6 +183,7 @@ class profileScreenState extends State<ProfileScreen> {
              elevation: 5.0,
              child: Text("Save"),
              onPressed: (){
+
                  uploadFile();
              })
        ],
@@ -187,6 +204,8 @@ UploadTask uploadTask =  ref.child(auth.currentUser.uid.toString()+".jpg").putFi
 var ImageUrl = await(await uploadTask).ref.getDownloadURL();
 
 
+refDatabase.child("User").child(auth.currentUser.uid.toString()).child("imageProfile").set(ImageUrl.toString());
+
 setState(() {
   imgUrl =ImageUrl.toString();
 });
@@ -196,6 +215,10 @@ setState(() {
 
 
   Widget imageProfile(BuildContext context) {
+    refDatabase.child("User").child(auth.currentUser.uid.toString()).child("imageProfile").once().then((DataSnapshot snapshot){
+      imgUrl=snapshot.value.toString();
+
+    });
     return Center(
       child: Stack(
         children: [
