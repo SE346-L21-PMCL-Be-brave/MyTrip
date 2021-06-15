@@ -45,19 +45,19 @@ class infomationScreenState extends State<infomationScreen>{
               children: [
             Text(parentPlace.name,style: TextStyle(color: Colors.lightGreen[900],fontSize: 18,fontWeight: FontWeight.bold),),
           SizedBox(height: MediaQuery.of(context).size.height*0.01,),
-            Text("Info"),
-            SizedBox(height: MediaQuery.of(context).size.height*0.01,),
-            Text("Location"),
+            Text("Location:", style: TextStyle(fontSize: 17),),
             SizedBox(height: MediaQuery.of(context).size.height*0.01,),
             Text(parentPlace.locate,style: TextStyle(color: Colors.lightGreen[900],fontSize: 12,),),
             SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                Text("Info:",style: TextStyle(fontSize: 17),),
+                SizedBox(height: MediaQuery.of(context).size.height*0.01,),
           Padding(padding: EdgeInsets.only(right: 10.0),
               child:
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Container(child:
-            Text("Once you have written and are happy with your topic sentence, you can start to fill in the rest of your paragraph. This is where the detailed, well-structured notes you wrote earlier will come in handy. Make sure that your paragraph is coherent, which means that it is easy to read and understand, that each sentence connects with the next and that everything flows nicely as a whole. To achieve this, try to write clear, simple sentences that express exactly what you want to say."))
-          ))])
+            Text(parentPlace.detail,style: TextStyle(color: Colors.lightGreen[900],fontSize: 12,),),
+        )))])
 
         ),
       ],),

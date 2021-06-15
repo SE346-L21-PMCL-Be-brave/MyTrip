@@ -27,7 +27,8 @@ class createTripScreenState extends State<createTripScreen>{
         Container(
         color: Colors.white,
         width: MediaQuery.of(context).size.width*0.97,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+        child: SingleChildScrollView(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
 
             children:[
 
@@ -69,7 +70,7 @@ class createTripScreenState extends State<createTripScreen>{
                  ),
                  SizedBox(height: 7,),
 
-                 Row(
+                 Row( 
                    mainAxisAlignment: MainAxisAlignment.start,
                    mainAxisSize: MainAxisSize.max,
                    children: [
@@ -127,6 +128,7 @@ class createTripScreenState extends State<createTripScreen>{
             ]
               )
              )
+       )
       )
     );
   }

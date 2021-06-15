@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mytripapp/Model/places.dart';
 import 'package:mytripapp/View/infomationScreen.dart';
@@ -11,10 +13,37 @@ detailsScreen(this.parentPlace);
 
 }
 class detailsScreenState extends State<detailsScreen>{
+  List<Place> details=[];
   Place parentPlace;
   detailsScreenState(this.parentPlace);
+ // @override
+  void a(){
+    //super.initState();
+    DatabaseReference data = FirebaseDatabase.instance.reference().child("Place").child(parentPlace.name).child('Site');
+    data.once().then((DataSnapshot dataSnapShot){
+      setState(() {
+        details.clear();
+        var keys = dataSnapShot.value.keys;
+        var values = dataSnapShot.value;
+        for(var key in keys)
+        {
+          Place data = new Place(
+            name: key,
+            locate: values[key]['Address'],
+            img: values[key]['Image'],
+            detail: values[key]['Detail'],
+          );
+          details.add(data);
+        }
+      });
+
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    a();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -28,7 +57,8 @@ class detailsScreenState extends State<detailsScreen>{
           },),
         elevation: 0,
       ),
-      body: Column(
+      body: SingleChildScrollView(
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
@@ -109,6 +139,7 @@ class detailsScreenState extends State<detailsScreen>{
           ),
 
         ],
+      ),
       ),
     );
   }

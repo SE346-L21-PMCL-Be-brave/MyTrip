@@ -1,9 +1,8 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mytripapp/Model/Utils/appUtils.dart';
 import 'package:mytripapp/Model/places.dart';
 import 'package:mytripapp/Model/CheckBoxPlaceModel.dart';
-import 'package:mytripapp/View/createTrip.dart';
 class chooseScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -12,14 +11,31 @@ class chooseScreen extends StatefulWidget {
 }
 
 class chooseScreenState extends State<chooseScreen>{
-  List<Place> availablePlace=[
-    Place(name: "Ho Chi Minh",locate: "noway",img:  "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg"),
-    Place(name: "Vung Tau",locate: "noway",img:  "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg"),
-    Place(name: "Nha Trang",locate: "noway",img:  "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg"),
-    Place(name: "Sa Pa",locate: "noway",img:  "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg"),
-    Place(name: "Da Lat",locate: "noway",img:  "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg"),
-    Place(name: "Vinh",locate: "noway",img:  "https://st3.depositphotos.com/18428194/32746/i/1600/depositphotos_327468620-stock-photo-panaji-india-december-15-2019.jpg"),
-  ];
+
+  @override
+  void initState(){
+    super.initState();
+    DatabaseReference placeData = FirebaseDatabase.instance.reference().child("Place");
+    placeData.once().then((DataSnapshot dataSnapShot){
+      availablePlace.clear();
+      var keys = dataSnapShot.value.keys;
+      var values = dataSnapShot.value;
+      for(var key in keys){
+        Place data = new Place(
+            name: key,
+            locate: values[key]['Locate'],
+            img: values[key]['Image']
+        );
+        availablePlace.add(data);
+      }
+      setState(() {
+        //
+      });
+    });
+  }
+
+
+
   List<CheckBoxModel> checkList=[];
   void changePlacelistToCheckList(List<Place> list, List<CheckBoxModel> checklist){
     for(var i=0;i<list.length;i++){
@@ -45,7 +61,8 @@ class chooseScreenState extends State<chooseScreen>{
       actions: [IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.close),color: Colors.black,)],
       elevation: 0,
     ),
-  body:Column(
+  body: SingleChildScrollView(
+    child: Column(
     children: [
       Container(
         color: Colors.white,
@@ -100,6 +117,7 @@ class chooseScreenState extends State<chooseScreen>{
           ))
     ],
 
+  )
   )
   );
   }
