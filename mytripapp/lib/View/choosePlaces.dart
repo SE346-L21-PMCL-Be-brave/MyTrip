@@ -11,6 +11,7 @@ class chooseScreen extends StatefulWidget {
 }
 
 class chooseScreenState extends State<chooseScreen>{
+  List<Place> availablePlace=[];
 
   @override
   void initState(){
