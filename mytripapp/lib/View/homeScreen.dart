@@ -22,6 +22,7 @@ class homeScreenState extends State<homeScreen> {
     super.initState();
     DatabaseReference referenceData = FirebaseDatabase.instance.reference().child("Carousel Slider ");
     referenceData.once().then((DataSnapshot dataSnapShot){
+      setState(() {
       int x =0;
       var keys = dataSnapShot.value.keys;
       var values = dataSnapShot.value;
@@ -30,7 +31,7 @@ class homeScreenState extends State<homeScreen> {
          imgList[x] = values[key];
          x++;
         }
-      setState(() {
+
       });
     });
   }

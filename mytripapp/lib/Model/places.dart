@@ -12,9 +12,12 @@ class Place {
 
 
 class Trip{
- static List<List<Place>> trip = [
+ String tripname= " ";
+ List<List<Place>> trip = [
 
 ];
+ Trip();
+
 }
 
 
