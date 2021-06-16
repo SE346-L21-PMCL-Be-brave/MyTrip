@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:mytripapp/View/placeWidget.dart';
+
 class Place {
   String name;
   String locate;
@@ -9,9 +12,12 @@ class Place {
 
 
 class Trip{
- static List<List<Place>> trip = [
+ String tripname= " ";
+ List<List<Place>> trip = [
 
 ];
+ Trip();
+
 }
 
 

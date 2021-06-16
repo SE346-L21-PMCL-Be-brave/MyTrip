@@ -1,9 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mytripapp/Model/Utils/appUtils.dart';
 import 'package:mytripapp/Model/places.dart';
 import 'choosePlaces.dart';
 class createTripScreen extends StatefulWidget{
+  createTripScreen({this.app});
+  FirebaseApp app;
   @override
   State<StatefulWidget> createState() {
     return createTripScreenState();
@@ -12,6 +17,9 @@ class createTripScreen extends StatefulWidget{
 }
 class createTripScreenState extends State<createTripScreen>{
   List<Place> fchoosePlace=[];
+ final mAuth = FirebaseAuth.instance;
+  final refDatabase = FirebaseDatabase.instance.reference();
+  TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
 
@@ -31,12 +39,19 @@ class createTripScreenState extends State<createTripScreen>{
           child: Column(crossAxisAlignment: CrossAxisAlignment.start,
 
             children:[
-
+              TextField(
+                style: TextStyle(color: Colors.black),
+                controller: nameController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                    hintText: "Trip Name",
+                    labelStyle: TextStyle(color: Color(0xff888888),fontSize: 15)
+                ),),
           Text("Destination",style: TextStyle(fontSize: 23,color: Colors.lightGreen[900],backgroundColor: Colors.white70,fontWeight: FontWeight.bold),),
           SizedBox(height: MediaQuery.of(context).size.height*0.005,),
               Container(
                 color: Colors.white,
-                height: MediaQuery.of(context).size.height*0.77,
+                height: MediaQuery.of(context).size.height*0.65,
                 width: MediaQuery.of(context).size.width,
         child:
         ListView.builder(
@@ -112,6 +127,7 @@ class createTripScreenState extends State<createTripScreen>{
                  TextButton(
 
                    onPressed: (){
+                     uploadToDatabase();
                      Navigator.pop(context,fchoosePlace);
                    },
                    child: Text("Create",style: TextStyle(color: Colors.white),),
@@ -144,5 +160,13 @@ class createTripScreenState extends State<createTripScreen>{
        fchoosePlace=result;
      });
    }
+  }
+
+  void uploadToDatabase() {
+    List<String> placename =[];
+    for(var i=0;i<fchoosePlace.length;i++){
+      placename.add(fchoosePlace[i].name);
+    }
+    refDatabase.child("User").child(mAuth.currentUser.uid.toString()).child(nameController.text.trim()).set(placename);
   }
 }

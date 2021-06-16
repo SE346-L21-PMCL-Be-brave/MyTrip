@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mytripapp/Model/Utils/appUtils.dart';
 import 'package:mytripapp/Model/places.dart';
@@ -7,6 +10,8 @@ import 'createTrip.dart';
 import 'package:mytripapp/Model/Utils/appUtils.dart';
 
 class TripScreen extends StatefulWidget {
+  TripScreen({this.app});
+  FirebaseApp app;
   @override
   State<StatefulWidget> createState() {
     return TripScreenState();
@@ -17,7 +22,9 @@ class TripScreenState extends State<TripScreen> {
   final GlobalKey _floatingKey = new GlobalKey();
   Size floatingSize;
   Offset floatingLocation = new Offset(10, 200);
-
+  Trip trip = new Trip();
+  final mAuth = FirebaseAuth.instance;
+  final refDatabase = FirebaseDatabase.instance.reference();
   void getFloatingSize() {
     RenderBox floatingBox = _floatingKey.currentContext.findRenderObject();
     floatingSize = floatingBox.size;
@@ -88,7 +95,7 @@ class TripScreenState extends State<TripScreen> {
             child: Stack(children: [
               ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: Trip.trip.length,
+                itemCount: trip.trip.length,
                 itemBuilder: (context, indexx) {
                   return SingleChildScrollView(
                       child: Column(
@@ -118,7 +125,7 @@ class TripScreenState extends State<TripScreen> {
                                 backgroundColor: Colors.white),
                             onPressed: () {
                               appUtils.index = indexx;
-                              appUtils.list = Trip.trip[indexx];
+                              appUtils.list = trip.trip[indexx];
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -134,7 +141,7 @@ class TripScreenState extends State<TripScreen> {
                           width: 600,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: Trip.trip[indexx].length,
+                              itemCount: trip.trip[indexx].length,
                               itemBuilder: (context, index) {
                                 return Column(
                                   children: [
@@ -144,7 +151,7 @@ class TripScreenState extends State<TripScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (_) => detailsScreen(
-                                                  Trip.trip[indexx][index])),
+                                                  trip.trip[indexx][index])),
                                         );
                                       },
                                       child: Padding(
@@ -153,13 +160,13 @@ class TripScreenState extends State<TripScreen> {
                                           height: 115,
                                           width: 150,
                                           child: Image.network(
-                                              Trip.trip[indexx][index].img,
+                                              trip.trip[indexx][index].img,
                                               fit: BoxFit.fill),
                                         ),
                                       ),
                                     ),
                                     Text(
-                                      Trip.trip[indexx][index].name,
+                                      trip.trip[indexx][index].name,
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w600,
@@ -184,6 +191,7 @@ class TripScreenState extends State<TripScreen> {
                     ),
                     backgroundColor: Colors.lightGreen[900],
                     onPressed: () {
+
                       _navigateAndDisplaySelection(context);
                     },
                     label: Container(
@@ -213,7 +221,7 @@ class TripScreenState extends State<TripScreen> {
     if (result != null) {
       setState(() {
         List<Place> newplacelist = result;
-        Trip.trip.add(newplacelist);
+        trip.trip.add(newplacelist);
       });
     }
   }

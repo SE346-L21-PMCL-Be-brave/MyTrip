@@ -24,8 +24,6 @@ class AuthenticationService {
           email: email,
           password: pass
       );
-
-
        Fluttertoast.showToast(
            msg: "Login success",
            toastLength: Toast.LENGTH_SHORT,
@@ -35,8 +33,6 @@ class AuthenticationService {
            textColor: Colors.white,
            fontSize: 16.0
        );
-
-
        return "Signed In";
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(
