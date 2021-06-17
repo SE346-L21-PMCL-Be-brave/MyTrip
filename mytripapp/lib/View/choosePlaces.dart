@@ -104,7 +104,6 @@ class chooseScreenState extends State<chooseScreen>{
             onPressed: (){
               addChoseItem(choseItem, checkList, availablePlace);
 
-
               Navigator.pop(context,choseItem);
 
             },

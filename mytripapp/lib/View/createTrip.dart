@@ -169,4 +169,5 @@ class createTripScreenState extends State<createTripScreen>{
     }
     refDatabase.child("User").child(mAuth.currentUser.uid.toString()).child(nameController.text.trim()).set(placename);
   }
+
 }

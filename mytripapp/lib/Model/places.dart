@@ -12,7 +12,6 @@ class Place {
 
 
 class Trip{
- String tripname= " ";
  List<List<Place>> trip = [
 
 ];
