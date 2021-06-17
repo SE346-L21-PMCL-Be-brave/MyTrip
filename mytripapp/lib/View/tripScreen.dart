@@ -222,6 +222,7 @@ class TripScreenState extends State<TripScreen> {
       setState(() {
         List<Place> newplacelist = result;
         trip.trip.add(newplacelist);
+
       });
     }
   }
