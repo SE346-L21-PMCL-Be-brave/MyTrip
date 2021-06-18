@@ -40,14 +40,16 @@ class TripScreenState extends State<TripScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => getFloatingSize());
-    get();
+
     setState(() {
+      get();
+
     });
   }
   List<String> tripname=[];
   List<List<dynamic>> tripplace =[];
   //Map<String, dynamic> listPlace;
-
+  List<Place> detailplace = [];
   Future<void> get() async {
     await refDatabase.child("User").child(mAuth.currentUser.uid.toString()).once().then((DataSnapshot dataSnapShot){
      // listPlace.clear();
@@ -58,15 +60,38 @@ class TripScreenState extends State<TripScreen> {
         //listPlace.addAll(values);
         for(var key in keys){
           if( key != "imageProfile"){
-            tripname.add(key);
-            tripplace.add(values[key]);
+          tripname.add(key);
+          tripplace.add(values[key]);
+
           }
         }
+
         setState(() {
           //
         });
       });
 
+  }
+
+  void getIMgURL(String name, String imgURL){
+    DatabaseReference data = FirebaseDatabase.instance.reference().child("Place").child(name);
+    data.once().then((DataSnapshot snapshot){
+
+      setState(() {
+        var keys = snapshot.value.keys;
+        var values =snapshot.value;
+        for(var key in keys){
+          if(key == "Image")
+            imgURL = values[key].toString();
+          print(imgURL);}
+
+      });
+    });
+  }
+  String Image(int indexx,int index){
+    String imgURL;
+    getIMgURL(tripplace[indexx][index], imgURL);
+    return imgURL;
   }
 //   {
 //    "aa" : ["a1" "a2",]
@@ -134,6 +159,7 @@ class TripScreenState extends State<TripScreen> {
     //print(listPlace);
     //getdataTrip();
     //dataTrip();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -161,7 +187,7 @@ class TripScreenState extends State<TripScreen> {
             child: Stack(children: [
               ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: trip.trip.length,
+                itemCount: tripname.length,
                 itemBuilder: (context, indexx) {
                   return SingleChildScrollView(
                       child: Column(
@@ -191,12 +217,12 @@ class TripScreenState extends State<TripScreen> {
                             style: TextButton.styleFrom(
                                 backgroundColor: Colors.white),
                             onPressed: () {
-                              appUtils.index = indexx;
-                              appUtils.list = trip.trip[indexx];
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Trip5Screen()));
+                              // appUtils.index = indexx;
+                              // appUtils.list = trip.trip[indexx];
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => Trip5Screen()));
                             },
                           ),
                         ]),
@@ -207,31 +233,35 @@ class TripScreenState extends State<TripScreen> {
                           height: MediaQuery.of(context).size.height * 0.2,
                           width: 600,
                           child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: trip.trip[indexx].length,
+                              scrollDirection: Axis.vertical,
+                              itemCount: tripplace[indexx].length,
                               itemBuilder: (context, index) {
                                 return Column(
                                   children: [
                                     InkWell(
                                       onTap: () {
+
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (_) => detailsScreen(
-                                                  trip.trip[indexx][index])),
+
+                                                  name: tripplace[indexx][index],
+                                               )),
                                         );
                                       },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          height: 115,
-                                          width: 150,
-                                          // child: Image.network(
-                                          //     //trip.trip[indexx][index].img,
-                                          //     fit: BoxFit.fill),
-                                        ),
-                                      ),
-                                    ),
+                                       child:
+                                       //Padding(
+                                      //   padding: const EdgeInsets.all(8.0),
+                                      //   child: Container(
+                                      //     height: 115,
+                                      //     width: 150,
+                                      //     child: Image.network(
+                                      //         Image(indexx,index),
+                                      //         fit: BoxFit.fill),
+                                      //   ),
+                                      // ),
+                                    // ),
                                     Text(
                                       tripplace[indexx][index],
                                       // trip.trip[indexx][index].name,
@@ -239,7 +269,7 @@ class TripScreenState extends State<TripScreen> {
                                           fontSize: 15,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.brown[900]),
-                                    ),
+                                    ),)
                                   ],
                                 );
                               }),

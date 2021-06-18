@@ -4,22 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:mytripapp/Model/places.dart';
 import 'package:mytripapp/View/infomationScreen.dart';
 class detailsScreen extends StatefulWidget{
-Place parentPlace;
-detailsScreen(this.parentPlace);
+String name;
+
+detailsScreen({this.name});
   @override
   State<StatefulWidget> createState() {
-    return detailsScreenState(parentPlace);
+    return detailsScreenState(name: name);
   }
 
 }
 class detailsScreenState extends State<detailsScreen>{
   List<Place> details=[];
-  Place parentPlace;
-  detailsScreenState(this.parentPlace);
+  // Place parentPlace;
+  String name;
+ String imgURL ="";
+  detailsScreenState({this.name});
  // @override
   void a(){
     //super.initState();
-    DatabaseReference data = FirebaseDatabase.instance.reference().child("Place").child(parentPlace.name).child('Site');
+    DatabaseReference data = FirebaseDatabase.instance.reference().child("Place").child(name).child('Site');
     data.once().then((DataSnapshot dataSnapShot){
       setState(() {
         details.clear();
@@ -39,15 +42,41 @@ class detailsScreenState extends State<detailsScreen>{
 
     });
   }
+void getIMgURL(){
+  DatabaseReference data = FirebaseDatabase.instance.reference().child("Place").child(name);
+  data.once().then((DataSnapshot snapshot){
 
+    setState(() {
+      var keys = snapshot.value.keys;
+      var values =snapshot.value;
+      for(var key in keys){
+        if(key == "Image")
+        imgURL = values[key].toString();
+      print(imgURL);}
+
+    });
+  });
+}
+
+  @override
+  void initState() {
+    super.initState();
+   setState(() {
+     a();
+     getIMgURL();
+
+   });
+
+  }
 
   @override
   Widget build(BuildContext context) {
-    a();
+
+   // getIMgURL();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(parentPlace.name,style: TextStyle(color: Colors.lightGreen[900],fontWeight: FontWeight.bold),),
+        title: Text(name,style: TextStyle(color: Colors.lightGreen[900],fontWeight: FontWeight.bold),),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back,
@@ -65,7 +94,7 @@ class detailsScreenState extends State<detailsScreen>{
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.3,
             decoration: BoxDecoration(
-                image: DecorationImage(image: NetworkImage(parentPlace.img),
+                image: DecorationImage(image: NetworkImage(imgURL),
                     fit: BoxFit.cover)
             ),
           ),
