@@ -4,22 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:mytripapp/Model/places.dart';
 import 'package:mytripapp/View/infomationScreen.dart';
 class detailsScreen extends StatefulWidget{
-Place parentPlace;
-detailsScreen(this.parentPlace);
+  Place place1;
+  detailsScreen(this.place1);
+// String name, img;
+// detailsScreen(this.name, this.img);
   @override
   State<StatefulWidget> createState() {
-    return detailsScreenState(parentPlace);
+    return detailsScreenState(place1);
   }
 
 }
 class detailsScreenState extends State<detailsScreen>{
   List<Place> details=[];
-  Place parentPlace;
-  detailsScreenState(this.parentPlace);
+  // String name, img;
+  // detailsScreenState(this.name, this.img);
+  Place place1;
+  detailsScreenState(this.place1);
  // @override
   void a(){
     //super.initState();
-    DatabaseReference data = FirebaseDatabase.instance.reference().child("Place").child(parentPlace.name).child('Site');
+    DatabaseReference data = FirebaseDatabase.instance.reference().child("Place").child(place1.name).child('Site');
     data.once().then((DataSnapshot dataSnapShot){
       setState(() {
         details.clear();
@@ -47,7 +51,7 @@ class detailsScreenState extends State<detailsScreen>{
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(parentPlace.name,style: TextStyle(color: Colors.lightGreen[900],fontWeight: FontWeight.bold),),
+        title: Text(place1.name,style: TextStyle(color: Colors.lightGreen[900],fontWeight: FontWeight.bold),),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back,
@@ -65,7 +69,7 @@ class detailsScreenState extends State<detailsScreen>{
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height*0.3,
             decoration: BoxDecoration(
-                image: DecorationImage(image: NetworkImage(parentPlace.img),
+                image: DecorationImage(image: NetworkImage(place1.img),
                     fit: BoxFit.cover)
             ),
           ),
