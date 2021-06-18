@@ -21,7 +21,6 @@ class detailsScreenState extends State<detailsScreen>{
   detailsScreenState(this.place1);
 
   void a(){
-
     DatabaseReference data = FirebaseDatabase.instance.reference().child("Place").child(place1.name).child('Site');
     data.once().then((DataSnapshot dataSnapShot){
       setState(() {
