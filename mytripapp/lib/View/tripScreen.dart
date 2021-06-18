@@ -74,7 +74,6 @@ class TripScreenState extends State<TripScreen> {
                );
                tripPlace.add(data);
               }
-            print('1');
             listTripPlace.add(tripPlace.toList());
           }
         }
@@ -182,8 +181,8 @@ class TripScreenState extends State<TripScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                         child: Container(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          width: 600,
+                          height: MediaQuery.of(context).size.height * 0.23,
+                          width: MediaQuery.of(context).size.width,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: (listTripPlace[indexx].length)>2?2:listTripPlace[indexx].length,
@@ -203,8 +202,8 @@ class TripScreenState extends State<TripScreen> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
-                                          height: 115,
-                                          width: 150,
+                                          height: MediaQuery.of(context).size.height * 0.17,
+                                          width: MediaQuery.of(context).size.width*0.43,
                                           child: Image.network(
                                               listTripPlace[indexx][index].img,
                                               fit: BoxFit.fill),
@@ -223,6 +222,20 @@ class TripScreenState extends State<TripScreen> {
                               }),
                         ),
                       ),
+                      Row(
+                        children: [
+                          Padding(padding: const EdgeInsets.only(right: 20.0),
+                          child:
+                          InkWell(
+                          child: Icon(Icons.delete),
+                          onTap: (){
+
+                          },
+                        ),
+                          )
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.end,
+                      )
                     ],
                   ));
                 },

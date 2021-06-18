@@ -6,6 +6,8 @@ import 'package:mytripapp/View/infomationScreen.dart';
 class detailsScreen extends StatefulWidget{
   Place place1;
   detailsScreen(this.place1);
+// String name, img;
+// detailsScreen(this.name, this.img);
   @override
   State<StatefulWidget> createState() {
     return detailsScreenState(place1);
@@ -14,11 +16,12 @@ class detailsScreen extends StatefulWidget{
 }
 class detailsScreenState extends State<detailsScreen>{
   List<Place> details=[];
+
   Place place1;
   detailsScreenState(this.place1);
-  @override
-  void initState(){
-    super.initState();
+
+  void a(){
+
     DatabaseReference data = FirebaseDatabase.instance.reference().child("Place").child(place1.name).child('Site');
     data.once().then((DataSnapshot dataSnapShot){
       setState(() {
@@ -36,16 +39,22 @@ class detailsScreenState extends State<detailsScreen>{
           details.add(data);
         }
       });
-      setState(() {
-        //
-      });
 
     });
   }
 
 
   @override
+  void initState() {
+    super.initState();
+    setState(() {
+      a();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -84,7 +93,7 @@ class detailsScreenState extends State<detailsScreen>{
             height: MediaQuery.of(context).size.height*0.49,
             child: ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: 3,
+                itemCount: details.length,
                 itemBuilder: (context,index){
                   return InkWell( child:
                   Row(
@@ -100,7 +109,12 @@ class detailsScreenState extends State<detailsScreen>{
                           child: Image.network(details[index].img,
                               fit: BoxFit.fill),
                         ),),
+                      Container(
+                        height: 115,
+                        width: MediaQuery.of(context).size.width -170,
+                        child:
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Destination",style: TextStyle(fontSize: 13),),
                           SizedBox(height: 7,),
@@ -112,18 +126,10 @@ class detailsScreenState extends State<detailsScreen>{
                                 color: Colors.brown[900]),
                           ),
                           SizedBox(height: 7,),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Icon(Icons.place,size: 18,color: Colors.lightGreen[900],),
-                              Text(details[index].locate,style: TextStyle(fontSize: 10),),
-                            ],
-                          )
+                          Text(details[index].locate,style: TextStyle(fontSize: 10,),maxLines: 3,),
                         ],
                       ),
-
+                      ),
 
                     ],
                   ),

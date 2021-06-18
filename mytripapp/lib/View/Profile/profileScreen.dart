@@ -35,7 +35,7 @@ class profileScreenState extends State<ProfileScreen> {
  String ImageUrl;
 final refDatabase = FirebaseDatabase.instance.reference();
 
- String imgUrl = "1";
+ String imgUrl = "http://www.darylroththeatre.com/wp-content/uploads/2018/10/avatar-placeholder.png";
 
 Future<void> getUserImage(BuildContext context){
 
