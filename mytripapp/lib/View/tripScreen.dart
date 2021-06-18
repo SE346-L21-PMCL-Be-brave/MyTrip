@@ -47,8 +47,8 @@ class TripScreenState extends State<TripScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => getFloatingSize());
-    get();
     setState(() {
+      get();
     });
   }
 

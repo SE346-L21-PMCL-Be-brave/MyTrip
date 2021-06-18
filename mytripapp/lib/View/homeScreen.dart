@@ -31,7 +31,6 @@ class homeScreenState extends State<homeScreen> {
          imgList[x] = values[key];
          x++;
         }
-
       });
     });
   }

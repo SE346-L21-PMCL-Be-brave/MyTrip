@@ -6,8 +6,6 @@ import 'package:mytripapp/View/infomationScreen.dart';
 class detailsScreen extends StatefulWidget{
   Place place1;
   detailsScreen(this.place1);
-// String name, img;
-// detailsScreen(this.name, this.img);
   @override
   State<StatefulWidget> createState() {
     return detailsScreenState(place1);
@@ -16,13 +14,11 @@ class detailsScreen extends StatefulWidget{
 }
 class detailsScreenState extends State<detailsScreen>{
   List<Place> details=[];
-  // String name, img;
-  // detailsScreenState(this.name, this.img);
   Place place1;
   detailsScreenState(this.place1);
- // @override
-  void a(){
-    //super.initState();
+  @override
+  void initState(){
+    super.initState();
     DatabaseReference data = FirebaseDatabase.instance.reference().child("Place").child(place1.name).child('Site');
     data.once().then((DataSnapshot dataSnapShot){
       setState(() {
@@ -40,6 +36,9 @@ class detailsScreenState extends State<detailsScreen>{
           details.add(data);
         }
       });
+      setState(() {
+        //
+      });
 
     });
   }
@@ -47,7 +46,6 @@ class detailsScreenState extends State<detailsScreen>{
 
   @override
   Widget build(BuildContext context) {
-    a();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
