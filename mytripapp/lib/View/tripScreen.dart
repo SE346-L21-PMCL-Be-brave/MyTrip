@@ -11,6 +11,7 @@ import 'package:mytripapp/View/details.dart';
 import 'createTrip.dart';
 import 'package:mytripapp/Model/Utils/appUtils.dart';
 
+
 class TripScreen extends StatefulWidget {
   TripScreen({this.app});
   FirebaseApp app;
@@ -23,6 +24,12 @@ class TripScreen extends StatefulWidget {
 
 
 class TripScreenState extends State<TripScreen> {
+  List<String> tripname=[];
+  List<List<Place>> listTripPlace =[];
+  List<Place> tripPlace=[];
+
+
+
 
   final GlobalKey _floatingKey = new GlobalKey();
   Size floatingSize;
@@ -40,90 +47,42 @@ class TripScreenState extends State<TripScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => getFloatingSize());
-
+    get();
     setState(() {
-      get();
-
     });
   }
-  List<String> tripname=[];
-  List<List<dynamic>> tripplace =[];
-  //Map<String, dynamic> listPlace;
-  List<Place> detailplace = [];
+
+
+
+
   Future<void> get() async {
-    await refDatabase.child("User").child(mAuth.currentUser.uid.toString()).once().then((DataSnapshot dataSnapShot){
-     // listPlace.clear();
+     await refDatabase.child("User").child(mAuth.currentUser.uid.toString()).once().then((DataSnapshot dataSnapShot){
+        listTripPlace.clear();
         tripname.clear();
-        tripplace.clear();
         var keys= dataSnapShot.value.keys;
         var values = dataSnapShot.value;
         //listPlace.addAll(values);
         for(var key in keys){
           if( key != "imageProfile"){
-          tripname.add(key);
-          tripplace.add(values[key]);
-
+            tripname.add(key);
+            tripPlace.clear();
+            for(var k in values[key].keys )
+              {
+               Place data = new Place(
+                 name: k,
+                 img: values[key][k],
+               );
+               tripPlace.add(data);
+              }
+            print('1');
+            listTripPlace.add(tripPlace.toList());
           }
         }
-
         setState(() {
           //
         });
       });
-
   }
-
-  void getIMgURL(String name, String imgURL){
-    DatabaseReference data = FirebaseDatabase.instance.reference().child("Place").child(name);
-    data.once().then((DataSnapshot snapshot){
-
-      setState(() {
-        var keys = snapshot.value.keys;
-        var values =snapshot.value;
-        for(var key in keys){
-          if(key == "Image")
-            imgURL = values[key].toString();
-          print(imgURL);}
-
-      });
-    });
-  }
-  String Image(int indexx,int index){
-    String imgURL;
-    getIMgURL(tripplace[indexx][index], imgURL);
-    return imgURL;
-  }
-//   {
-//    "aa" : ["a1" "a2",]
-//   "bb":["b1","b2"],
-//   "img": ["..."]
-// }
-//   Future<List<String>> getAByB(key) async {
-//      List<String> _value = [];
-//    listPlace["key"].forEach((item){
-//      _value.add(item);
-//    });
-//    _value.forEach((nameTrip){
-//      getdataTrip(nameTrip);
-//    });
-//     return _value;
-//   }
-//   void getdataTrip(key){
-//     // refDatabase.child("User").child(mAuth.currentUser.uid.toString()).once().then((DataSnapshot dataSnapShot) {
-//     //   var keys = dataSnapShot.value.keys;
-//     //   var values = dataSnapShot.value;
-//     //   for (var key in keys) {
-//     //     if(key != "imageProfile"){
-//     //       tripplace.add(values[key]);}
-//     //
-//     //   }
-//     // });
-//     print(tripname.toString);
-//
-//     print(tripplace);
-//     print(tripplace[0]);
-//     print(tripplace[0][1]);
-//   }
   void onDragUpdate(BuildContext context, DragUpdateDetails details) {
     final RenderBox box = context.findRenderObject();
     final Offset offset = box.globalToLocal(details.globalPosition);
@@ -156,10 +115,6 @@ class TripScreenState extends State<TripScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //print(listPlace);
-    //getdataTrip();
-    //dataTrip();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -187,7 +142,7 @@ class TripScreenState extends State<TripScreen> {
             child: Stack(children: [
               ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: tripname.length,
+                itemCount:  tripname.length,
                 itemBuilder: (context, indexx) {
                   return SingleChildScrollView(
                       child: Column(
@@ -198,7 +153,6 @@ class TripScreenState extends State<TripScreen> {
                           Expanded(
                             child: Text(
                               tripname[indexx],
-                              // "Trip " + (indexx + 1).toString(),
                               style: TextStyle(
                                 color: Colors.lightGreen[800],
                                 fontSize: 19,
@@ -208,7 +162,7 @@ class TripScreenState extends State<TripScreen> {
                           ),
                           TextButton(
                             child: Text(
-                              "View All",
+                              "[" + listTripPlace[indexx].length.toString() + "] " + "View All",
                               style: TextStyle(
                                 color: Colors.lightGreen[800],
                                 fontSize: 15,
@@ -217,12 +171,10 @@ class TripScreenState extends State<TripScreen> {
                             style: TextButton.styleFrom(
                                 backgroundColor: Colors.white),
                             onPressed: () {
-                              // appUtils.index = indexx;
-                              // appUtils.list = trip.trip[indexx];
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => Trip5Screen()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Trip5Screen(name: tripname[indexx], data: listTripPlace[indexx],)));
                             },
                           ),
                         ]),
@@ -233,43 +185,39 @@ class TripScreenState extends State<TripScreen> {
                           height: MediaQuery.of(context).size.height * 0.2,
                           width: 600,
                           child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount: tripplace[indexx].length,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: (listTripPlace[indexx].length)>2?2:listTripPlace[indexx].length,
                               itemBuilder: (context, index) {
+
                                 return Column(
                                   children: [
                                     InkWell(
                                       onTap: () {
-
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (_) => detailsScreen(
-
-                                                  name: tripplace[indexx][index],
-                                               )),
+                                                listTripPlace[indexx][index], )),
                                         );
                                       },
-                                       child:
-                                       //Padding(
-                                      //   padding: const EdgeInsets.all(8.0),
-                                      //   child: Container(
-                                      //     height: 115,
-                                      //     width: 150,
-                                      //     child: Image.network(
-                                      //         Image(indexx,index),
-                                      //         fit: BoxFit.fill),
-                                      //   ),
-                                      // ),
-                                    // ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height: 115,
+                                          width: 150,
+                                          child: Image.network(
+                                              listTripPlace[indexx][index].img,
+                                              fit: BoxFit.fill),
+                                        ),
+                                      ),
+                                    ),
                                     Text(
-                                      tripplace[indexx][index],
-                                      // trip.trip[indexx][index].name,
+                                      listTripPlace[indexx][index].name,
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.brown[900]),
-                                    ),)
+                                    ),
                                   ],
                                 );
                               }),
@@ -320,10 +268,7 @@ class TripScreenState extends State<TripScreen> {
       setState(() {
         List<Place> newplacelist = result;
         trip.trip.add(newplacelist);
-
         get();
-
-
       });
     }
   }

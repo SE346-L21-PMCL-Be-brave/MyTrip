@@ -5,3 +5,4 @@ class appUtils{
   static List<Place> list;
 
 }
+

@@ -163,14 +163,11 @@ class createTripScreenState extends State<createTripScreen>{
   }
 
   void uploadToDatabase() {
-    List<String> placename =[];
-
+    Map<String, dynamic> place ={};
     for(var i=0;i<fchoosePlace.length;i++){
-      placename.add(fchoosePlace[i].name);
-
+      place[fchoosePlace[i].name] = fchoosePlace[i].img;
     }
-    refDatabase.child("User").child(mAuth.currentUser.uid.toString()).child(nameController.text.trim()).set(placename);
-
+    refDatabase.child("User").child(mAuth.currentUser.uid.toString()).child(nameController.text.trim()).set(place);
   }
 
 }
