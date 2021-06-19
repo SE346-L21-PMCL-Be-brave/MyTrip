@@ -214,7 +214,7 @@ void initMostRecent(){
                 width: MediaQuery.of(context).size.width,
                 child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
+                      maxCrossAxisExtent: MediaQuery.of(context).size.width*0.6,
                     ),
                     scrollDirection: Axis.vertical,
                     itemCount: mostRecent.length,
