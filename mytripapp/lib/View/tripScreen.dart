@@ -47,14 +47,10 @@ class TripScreenState extends State<TripScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => getFloatingSize());
-    get();
     setState(() {
+      get();
     });
   }
-
-
-
-
   Future<void> get() async {
      await refDatabase.child("User").child(mAuth.currentUser.uid.toString()).once().then((DataSnapshot dataSnapShot){
         listTripPlace.clear();
@@ -81,6 +77,13 @@ class TripScreenState extends State<TripScreen> {
           //
         });
       });
+  }
+  void Remove(String key){
+    refDatabase.child("User").child(mAuth.currentUser.uid.toString()).child(key).remove();
+    get();
+    setState(() {
+
+    });
   }
   void onDragUpdate(BuildContext context, DragUpdateDetails details) {
     final RenderBox box = context.findRenderObject();
@@ -229,7 +232,10 @@ class TripScreenState extends State<TripScreen> {
                           InkWell(
                           child: Icon(Icons.delete),
                           onTap: (){
+                            setState(() {
+                            Remove(tripname[indexx]);
 
+                            });
                           },
                         ),
                           )
