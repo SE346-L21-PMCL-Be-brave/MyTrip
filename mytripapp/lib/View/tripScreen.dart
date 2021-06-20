@@ -83,6 +83,7 @@ class TripScreenState extends State<TripScreen> {
     get();
     setState(() {
 
+
     });
   }
   void onDragUpdate(BuildContext context, DragUpdateDetails details) {

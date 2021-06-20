@@ -17,14 +17,16 @@ class AuthenticationService {
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
-
+  final auth= FirebaseAuth.instance;
+  final refDatabase = FirebaseDatabase.instance.reference();
   Future<String> signIn({String email,String pass}) async {
     try {
-       await _firebaseAuth.signInWithEmailAndPassword(
+      await _firebaseAuth.signInWithEmailAndPassword(
           email: email,
           password: pass
       );
-       Fluttertoast.showToast(
+      await refDatabase.child("User").child(auth.currentUser.uid.toString()).child("imageProfile").set("http://www.darylroththeatre.com/wp-content/uploads/2018/10/avatar-placeholder.png");
+      Fluttertoast.showToast(
            msg: "Login success",
            toastLength: Toast.LENGTH_SHORT,
            gravity: ToastGravity.TOP,
