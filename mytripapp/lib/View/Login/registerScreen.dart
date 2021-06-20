@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -21,6 +22,10 @@ class registerScreenState extends State<RegisterScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
+  final auth = FirebaseAuth.instance;
+  final refDatabase = FirebaseDatabase.instance.reference();
+
+
 
 
 
@@ -59,20 +64,6 @@ class registerScreenState extends State<RegisterScreen> {
             ),
           ),
         ),
-        //----------------------------USERNAME------------------------
-        // Padding(
-        //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
-        //   child: TextField(
-        //     style: TextStyle(color: Colors.black),
-        //     decoration: InputDecoration(
-        //       border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-        //       hintText: "Username",
-        //       //labelStyle: TextStyle(color: Color(0xff888888),fontSize: 60)
-        //     ),
-        //   onChanged: (text){
-        //
-        //   },),
-        // ),
         //------------------------PASSWORD----------------------------
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
@@ -150,6 +141,7 @@ class registerScreenState extends State<RegisterScreen> {
                             textColor: Colors.white,
                             fontSize: 16.0
                         );
+
                       }
                       else{
                         Fluttertoast.showToast(
