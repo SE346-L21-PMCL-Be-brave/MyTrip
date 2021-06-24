@@ -4,12 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:mytripapp/Model/Utils/appUtils.dart';
+
 import 'package:mytripapp/Model/places.dart';
 import 'package:mytripapp/View/Trip5.dart';
 import 'package:mytripapp/View/details.dart';
 import 'createTrip.dart';
-import 'package:mytripapp/Model/Utils/appUtils.dart';
+
 
 
 class TripScreen extends StatefulWidget {
