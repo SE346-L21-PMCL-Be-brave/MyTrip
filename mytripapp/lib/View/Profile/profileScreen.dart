@@ -12,7 +12,6 @@ import 'package:mytripapp/Controller/app.dart';
 import 'package:mytripapp/Controller/auth_service.dart';
 import 'package:mytripapp/View/Login/loginScreen.dart';
 import 'package:mytripapp/View/Profile/updatePass.dart';
-import 'package:mytripapp/View/Profile/updateProfileImageScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:mytripapp/View/bottomNavigationBar.dart';
 import 'package:firebase_database/firebase_database.dart';
