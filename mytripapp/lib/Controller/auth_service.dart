@@ -25,7 +25,20 @@ class AuthenticationService {
           email: email,
           password: pass
       );
-      await refDatabase.child("User").child(auth.currentUser.uid.toString()).child("imageProfile").set("http://www.darylroththeatre.com/wp-content/uploads/2018/10/avatar-placeholder.png");
+      await refDatabase.child("User").once().then((DataSnapshot dataSnapShot){
+        var keys= dataSnapShot.value.keys;
+        var values = dataSnapShot.value;
+        int x =0;
+        for(var key in keys){
+            if(key== auth.currentUser.uid.toString()){
+              x++;
+            }
+          }
+        if(x==0){
+          refDatabase.child("User").child(auth.currentUser.uid.toString()).child("imageProfile").set("http://www.darylroththeatre.com/wp-content/uploads/2018/10/avatar-placeholder.png");
+        }
+      });
+      //await refDatabase.child("User").child(auth.currentUser.uid.toString()).child("imageProfile").set("http://www.darylroththeatre.com/wp-content/uploads/2018/10/avatar-placeholder.png");
       Fluttertoast.showToast(
            msg: "Login success",
            toastLength: Toast.LENGTH_SHORT,

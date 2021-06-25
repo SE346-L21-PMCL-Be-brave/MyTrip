@@ -1,15 +1,11 @@
 
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mytripapp/Controller/auth_service.dart';
 import 'package:mytripapp/View/Login/registerScreen.dart';
 import 'package:provider/provider.dart';
-import '../bottomNavigationBar.dart';
-import 'package:mytripapp/Controller/app.dart';
 
 class LoginScreen extends StatefulWidget{
 
@@ -24,13 +20,6 @@ class loginScreenState extends State<LoginScreen>{
  final TextEditingController passController = TextEditingController();
   bool _eyeText = true;
   final auth= FirebaseAuth.instance;
- final refDatabase = FirebaseDatabase.instance.reference();
-
- Future<void> get() async {
-   await refDatabase.child("User").child(auth.currentUser.uid.toString()).child("imageProfile").set("http://www.darylroththeatre.com/wp-content/uploads/2018/10/avatar-placeholder.png");
-   setState(() {
-   });
- }
   Future<String> createDialog(BuildContext context){
     TextEditingController resetController= TextEditingController();
     return showDialog(context: context, builder:(context){
