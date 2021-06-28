@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mytripapp/Model/places.dart';
 import 'choosePlaces.dart';
 class createTripScreen extends StatefulWidget{
@@ -126,8 +127,32 @@ class createTripScreenState extends State<createTripScreen>{
                  TextButton(
 
                    onPressed: (){
+                     if(nameController.text.trim().isEmpty){
+                       Fluttertoast.showToast(
+                           msg: "Name is empty! Please fill out",
+                           toastLength: Toast.LENGTH_SHORT,
+                           gravity: ToastGravity.TOP,
+                           timeInSecForIosWeb: 1,
+                           backgroundColor: Colors.grey,
+                           textColor: Colors.white,
+                           fontSize: 16.0
+                       );
+                     }
+                     else if(fchoosePlace.isEmpty){
+                       Fluttertoast.showToast(
+                           msg: "Please choose places!!!",
+                           toastLength: Toast.LENGTH_SHORT,
+                           gravity: ToastGravity.TOP,
+                           timeInSecForIosWeb: 1,
+                           backgroundColor: Colors.grey,
+                           textColor: Colors.white,
+                           fontSize: 16.0
+                       );
+                     }
+                     else{
                      uploadToDatabase();
                      Navigator.pop(context,fchoosePlace);
+                     }
                    },
                    child: Text("Create",style: TextStyle(color: Colors.white),),
                    style: TextButton.styleFrom(
