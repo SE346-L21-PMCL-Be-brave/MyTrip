@@ -2,7 +2,7 @@
 ## Table of contents
 * [Giới thiệu chung](#Giới-thiệu-chung)
 * [Các chức năng](#Các-chức-năng)
-* [Các màn hình khác](#Các màn hình khác)
+* [Các màn hình khác](#Các-màn-hình-khác)
 * [Thư viện và công nghệ](#Thư-viện-và-công-nghệ)
 * [Tác giả](#Tác-giả)
 ## Giới thiệu chung
@@ -51,10 +51,11 @@ Sau quá trình tìm hiểu và nắm bắt được tình hình trên, cùng v�
 ## Các giao diện khác
 1. Giao diện khởi động
 
-![Giao diện khởi động](UiImages/picture1.png)
+![Giao diện khởi động](UiImages/Picture1.png)
 
 2. Giao diện trang chủ 
-![Giao diện trang chủ](UiImages/picture4.png)
+
+![Giao diện trang chủ](UiImages/Picture4.png)
 
 ## Thư viện và công nghệ
 1. Công nghệ:
