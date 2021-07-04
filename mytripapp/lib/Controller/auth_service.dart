@@ -83,13 +83,13 @@ class AuthenticationService {
     }
   }
 }
-class FirebaseApi {
-  static UploadTask uploadImage(String destination, File image){
-    try {
-      final ref = FirebaseStorage.instance.ref(destination);
-      return ref.putFile(image);
-    } on FirebaseException catch(e){
-      return null;
-    }
-  }
-}
+// class FirebaseApi {
+//   static UploadTask uploadImage(String destination, File image){
+//     try {
+//       final ref = FirebaseStorage.instance.ref(destination);
+//       return ref.putFile(image);
+//     } on FirebaseException catch(e){
+//       return null;
+//     }
+//   }
+// }

@@ -141,7 +141,6 @@ class registerScreenState extends State<RegisterScreen> {
                             textColor: Colors.white,
                             fontSize: 16.0
                         );
-
                       }
                       else{
                         Fluttertoast.showToast(
@@ -188,7 +187,9 @@ class registerScreenState extends State<RegisterScreen> {
                         ..onTap = () {
                           Navigator.pop(
                               context);
+                          context.read<AuthenticationService>().signOut();
                         },
+
                       text: " Log in now",
                       style: TextStyle(
                           color: Colors.lightGreen[800], fontSize: 12),
