@@ -186,10 +186,8 @@ class registerScreenState extends State<RegisterScreen> {
                     TextSpan(
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                          Navigator.pop(
+                              context);
                         },
                       text: " Log in now",
                       style: TextStyle(
