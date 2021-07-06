@@ -132,15 +132,7 @@ class registerScreenState extends State<RegisterScreen> {
                         context.read<AuthenticationService>().signUp(
                             email: emailController.text.trim(),
                     pass: passController.text.trim());
-                        Fluttertoast.showToast(
-                            msg: "Register success! Please login.",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.TOP,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.grey,
-                            textColor: Colors.white,
-                            fontSize: 16.0
-                        );
+
                       }
                       else{
                         Fluttertoast.showToast(
@@ -184,10 +176,12 @@ class registerScreenState extends State<RegisterScreen> {
                   children: <TextSpan>[
                     TextSpan(
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () {
+                        ..onTap = ()  {
+
                           Navigator.pop(
                               context);
                           context.read<AuthenticationService>().signOut();
+
                         },
 
                       text: " Log in now",
