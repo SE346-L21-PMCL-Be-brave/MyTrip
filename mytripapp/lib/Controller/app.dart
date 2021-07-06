@@ -37,6 +37,7 @@ class AuthenticationWrapper extends StatelessWidget{
       return navigationBar();
     }
     else {
+
       return LoginScreen();
     }
   }

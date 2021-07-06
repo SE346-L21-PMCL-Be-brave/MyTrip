@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mytripapp/Controller/auth_service.dart';
 import 'package:mytripapp/View/Login/registerScreen.dart';
 import 'package:provider/provider.dart';
@@ -125,13 +126,26 @@ class loginScreenState extends State<LoginScreen>{
                            child: RaisedButton(
                               color: Color(0xff33691e),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                              onPressed: (){
-
+                              onPressed: () async {
+                                final user = await auth.signInWithEmailAndPassword(
+                                    email: emailController.text.trim(), password: passController.text.trim());
+                                if(user.user.emailVerified){
                                 context.read<AuthenticationService>().signIn(
                                   email: emailController.text.trim(),
                                   pass: passController.text.trim()
-
                                 );
+                                }else{
+                                  auth.signOut();
+                                  Fluttertoast.showToast(
+                                      msg: "Please verified your account!!!",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.TOP,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.grey,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0
+                                  );
+                                }
 
                               },
                               child: Text("Log In",

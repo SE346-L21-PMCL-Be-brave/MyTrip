@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +21,13 @@ class AuthenticationService {
   final auth= FirebaseAuth.instance;
   final refDatabase = FirebaseDatabase.instance.reference();
   Future<String> signIn({String email,String pass}) async {
+
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
+       await _firebaseAuth.signInWithEmailAndPassword(
           email: email,
           password: pass
       );
+
       await refDatabase.child("User").once().then((DataSnapshot dataSnapShot){
         var keys= dataSnapShot.value.keys;
         var values = dataSnapShot.value;
@@ -49,6 +52,8 @@ class AuthenticationService {
            fontSize: 16.0
        );
        return "Signed In";
+
+
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(
           msg: "Login Failed!!",
@@ -67,6 +72,18 @@ class AuthenticationService {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email,
           password: pass
+      ).then((user) async {
+        User firebaseUser = FirebaseAuth.instance.currentUser;
+        await firebaseUser.sendEmailVerification();
+      });
+      Fluttertoast.showToast(
+          msg: "Register success! Check your email to verify.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0
       );
       return "Signed Up";
     } on FirebaseAuthException catch (e) {
