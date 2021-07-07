@@ -106,7 +106,16 @@ class loginScreenState extends State<LoginScreen>{
                            child: TextButton(
                               onPressed: (){
                                   createDialog(context).then((onValue){
-                              auth.sendPasswordResetEmail(email: onValue);
+                              auth.sendPasswordResetEmail(email: onValue).then((_) =>
+                                  Fluttertoast.showToast(
+                                  msg: "Request email has been sent",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.TOP,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.grey,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0
+                              ));
                                   });
                               },
                                child: Text("Forgot Password?",
